@@ -1,3 +1,7 @@
+To install dependencies locally:
+
+    $ go get -d ./...
+
 You can then build and run the Docker image:
 
     $ docker build -t lookup .

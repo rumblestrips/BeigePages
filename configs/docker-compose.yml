@@ -1,0 +1,33 @@
+version: '2'
+services:
+  registrationService:
+    build: beigepages/registrationService
+    restart: always
+    ports:
+      - "8083:8080"
+    environment:
+      ENV: DEV
+
+  queueService:
+    build: beigepages/queueService
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      ENV: DEV
+
+  accountService:
+    build: beigepages/accountService
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      ENV: DEV
+
+  lookupService:
+    build: beigepages/lookupService
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      ENV: DEV

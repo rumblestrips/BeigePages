@@ -1,0 +1,145 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2017-11-24T13:56:43.969Z",
+	"__export_source": "insomnia.desktop.app:v5.11.7",
+	"resources": [
+		{
+			"_id": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"parentId": null,
+			"modified": 1511453361938,
+			"created": 1511453361938,
+			"name": "Insomnia",
+			"description": "",
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_27b1eed4b6bd42688c605caf165a0ea2",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511523279838,
+			"created": 1511453361959,
+			"name": "Base Environment",
+			"data": {
+				"host": "localhost"
+			},
+			"color": null,
+			"isPrivate": false,
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_134d43d444e143f4be26ef6234f261fd",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511453361941,
+			"created": 1511453361941,
+			"name": "Default Jar",
+			"cookies": [],
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "req_ec3ddb7444374dfe9a81ff07bf86f9a0",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511524461565,
+			"created": 1511453410443,
+			"url": "http://{{host}}:8081/lookup/tom",
+			"name": "Lookup",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1511453410443,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_cd1b283d4b5945feafdc938ab7e82c89",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511525631269,
+			"created": 1511453466090,
+			"url": "http://{{host}}:8083/register/tom/0123456/E18PY/tom@example.com",
+			"name": "Register",
+			"description": "",
+			"method": "POST",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1511453466090,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_a8c4cdc9ff7e40c5a9e82a5328d24fb1",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511527043772,
+			"created": 1511526538509,
+			"url": "http://{{host}}:8080/accountService/daniel",
+			"name": "Account Lookup",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1511453410393,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "req_3a9fbf89f1214e22b26092589f10dd13",
+			"parentId": "wrk_6b3d67d6c7d943e79f95610090f9148a",
+			"modified": 1511529093934,
+			"created": 1511529083853,
+			"url": "http://{{host}}:8081/metrics",
+			"name": "Lookup Metrics",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {},
+			"metaSortKey": -1511453410418,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"_type": "request"
+		},
+		{
+			"_id": "env_875f3faf78a44f3b972abe7d0eea9225",
+			"parentId": "env_27b1eed4b6bd42688c605caf165a0ea2",
+			"modified": 1511523293059,
+			"created": 1511523281642,
+			"name": "Vagrant",
+			"data": {
+				"host": "10.10.10.10"
+			},
+			"color": null,
+			"isPrivate": false,
+			"_type": "environment"
+		},
+		{
+			"_id": "env_881d57c8bd674100a13c86c26a88ef00",
+			"parentId": "env_27b1eed4b6bd42688c605caf165a0ea2",
+			"modified": 1511523317968,
+			"created": 1511523309069,
+			"name": "Local",
+			"data": {
+				"host": "localhost"
+			},
+			"color": null,
+			"isPrivate": false,
+			"_type": "environment"
+		}
+	]
+}

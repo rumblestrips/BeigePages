@@ -3,18 +3,24 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-
 	router := gin.Default()
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8083"
+	}
+	port = fmt.Sprintf(":%s", port)
 
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.POST("/register/:name/:phoneNumber", register)
-	router.Run(":8083")
+	router.Run(port)
 }
 
 func register(c *gin.Context) {
@@ -27,7 +33,12 @@ func register(c *gin.Context) {
 }
 
 func push(name string, number string) int {
-	url := fmt.Sprintf("http://localhost:8082/enqueue/%s/%s", name, number)
+	queueServiceURL := os.Getenv("QUEUE_SERVICE_URL")
+	if queueServiceURL == "" {
+		queueServiceURL = "http://localhost:8082"
+	}
+
+	url := fmt.Sprintf("%s/enqueue/%s/%s", queueServiceURL, name, number)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
 		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")

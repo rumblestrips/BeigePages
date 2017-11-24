@@ -27,7 +27,7 @@ func register(c *gin.Context) {
 }
 
 func push(name string, number string) int {
-	url := fmt.Sprintf("http://localhost:8080/enqueue/%s/%s", name, number)
+	url := fmt.Sprintf("http://localhost:8082/enqueue/%s/%s", name, number)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
 		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")

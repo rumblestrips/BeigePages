@@ -18,6 +18,8 @@ services:
     environment:
       ENV: DEV
       PORT: 8082
+      ACCOUNT_SERVICE_URL: http://account-service:8080
+      LOOKUP_SERVICE_URL: http://lookup-service:8081
 
   account-service:
     build: ../accountService

@@ -44,19 +44,27 @@ func push(name string, phoneNumber string) int {
 }
 
 func pushToLookupService(name string, number string) int {
-	url := fmt.Sprintf("http://localhost:8081/lookupService/%s/%s", name, number)
+	lookupServiceURL := os.Getenv("LOOKUP_SERVICE_URL")
+	if lookupServiceURL == "" {
+		lookupServiceURL = "http://localhost:8082"
+	}
+	url := fmt.Sprintf("%s/register/%s/%s", lookupServiceURL, name, number)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
-		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")
+		fmt.Println("Guru Meditation: lookup")
 	}
 	return resp.StatusCode
 }
 
 func pushToAccountService(name string, number string) int {
-	url := fmt.Sprintf("http://localhost:8080/accountService/%s/%s", name, number)
+	accountServiceURL := os.Getenv("ACCOUNT_SERVICE_URL")
+	if accountServiceURL == "" {
+		accountServiceURL = "http://localhost:8080"
+	}
+	url := fmt.Sprintf("%s/accountService/%s/%s", accountServiceURL, name, number)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
-		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")
+		fmt.Println("Guru Meditation: account")
 	}
 	return resp.StatusCode
 }

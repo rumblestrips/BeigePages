@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,14 +19,37 @@ func main() {
 
 func enqueue(c *gin.Context) {
 	name := c.Param("name")
-	number := c.Param("phoneNumber")
+	phoneNumber := c.Param("phoneNumber")
 
-	push(name, number)
+	statusCode := push(name, phoneNumber)
 
-	c.Status(http.StatusOK)
+	c.Status(statusCode)
 
 }
 
-func push(string, string) {
-	// Add hardcoded push calls here.
+func push(name string, phoneNumber string) int {
+	accountServiceStatusCode := pushToAccountService(name, phoneNumber)
+	lookupServiceStatusCode := pushToLookupService(name, phoneNumber)
+	if accountServiceStatusCode != http.StatusOK && lookupServiceStatusCode != http.StatusOK {
+		return http.StatusBadRequest
+	}
+	return http.StatusOK
+}
+
+func pushToLookupService(name string, number string) int {
+	url := fmt.Sprintf("http://localhost:8081/lookupService/%s/%s", name, number)
+	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
+	if err != nil {
+		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")
+	}
+	return resp.StatusCode
+}
+
+func pushToAccountService(name string, number string) int {
+	url := fmt.Sprintf("http://localhost:8080/accountService/%s/%s", name, number)
+	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
+	if err != nil {
+		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")
+	}
+	return resp.StatusCode
 }

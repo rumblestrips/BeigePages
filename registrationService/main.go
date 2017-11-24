@@ -40,7 +40,7 @@ func push(name string, phoneNumber string, postCode string, email string) int {
 		queueServiceURL = "http://localhost:8082"
 	}
 
-	url := fmt.Sprintf("%s/enqueue/%s/%s/%s/%s", queueServiceURL, name, phoneNumber, email)
+	url := fmt.Sprintf("%s/enqueue/%s/%s/%s/%s", queueServiceURL, name, phoneNumber, postCode, email)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
 		fmt.Println("Guru Meditation: registrationService")

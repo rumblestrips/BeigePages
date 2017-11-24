@@ -36,7 +36,7 @@ func enqueue(c *gin.Context) {
 
 }
 
-func push(name string, phoneNumber string postCode string, email string) int {
+func push(name string, phoneNumber string, postCode string, email string) int {
 	accountServiceStatusCode := pushToAccountService(name, phoneNumber, postCode, email)
 	lookupServiceStatusCode := pushToLookupService(name, phoneNumber)
 	if accountServiceStatusCode != http.StatusOK && lookupServiceStatusCode != http.StatusOK {

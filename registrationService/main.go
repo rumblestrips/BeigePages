@@ -12,7 +12,7 @@ func main() {
 
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.POST("/register/:name/:phoneNumber", register)
-	router.Run(":8080")
+	router.Run(":8083")
 }
 
 func register(c *gin.Context) {

@@ -14,7 +14,7 @@ func main() {
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.GET("/lookup/:name", lookup(phoneRegistry))
 	router.POST("/register/:name/:phoneNumber", register(phoneRegistry))
-	router.Run(":8080")
+	router.Run(":8081")
 }
 
 func lookup(phoneRegistry map[string]string) func(*gin.Context) {

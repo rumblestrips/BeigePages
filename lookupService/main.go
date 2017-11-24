@@ -5,17 +5,32 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 	"github.com/gin-gonic/gin"
 )
 
 var phoneRegistry map[string]string
-var numLookups int
-var numRegistrations int
+var numLookups prometheus.Counter
+var numRegistrations prometheus.Counter
 
 func main() {
 	phoneRegistry = make(map[string]string)
-	numLookups = 0
-	numRegistrations = 0
+	numLookups = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: "beigepages",
+		Subsystem: "lookup",
+		Name:      "num_lookups",
+		Help:      "Number of lookups",
+	})
+	numRegistrations = prometheus.NewCounter(prometheus.CounterOpts{
+		Namespace: "beigepages",
+		Subsystem: "lookup",
+		Name:      "num_registrations",
+		Help:      "Number of registrations",
+	})
+	prometheus.MustRegister(numLookups)
+	prometheus.MustRegister(numRegistrations)
 
 	router := gin.Default()
 
@@ -28,14 +43,12 @@ func main() {
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.GET("/lookup/:name", lookup)
 	router.POST("/register/:name/:phoneNumber", register)
-	router.GET("/metrics", func(c *gin.Context) {
-		c.String(http.StatusOK, fmt.Sprintf("num_lookups %d\nnum_registrations %d", numLookups, numRegistrations))
-	})
+	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	router.Run(port)
 }
 
 func lookup(c *gin.Context) {
-	numLookups++
+	numLookups.Inc()
 	phoneNumber, ok := phoneRegistry[c.Param("name")]
 
 	if ok {
@@ -48,7 +61,7 @@ func lookup(c *gin.Context) {
 }
 
 func register(c *gin.Context) {
-	numRegistrations++
+	numRegistrations.Inc()
 	phoneRegistry[c.Param("name")] = c.Param("phoneNumber")
 
 	c.Status(http.StatusOK)

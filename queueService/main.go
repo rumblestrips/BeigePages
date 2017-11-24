@@ -20,22 +20,24 @@ func main() {
 	port = fmt.Sprintf(":%s", port)
 
 	// This handler will match /user/john but will not match neither /user/ or /user
-	router.POST("/enqueue/:name/:phoneNumber", enqueue)
+	router.POST("/enqueue/:name/:phoneNumber/:postCode/:email", enqueue)
 	router.Run(port)
 }
 
 func enqueue(c *gin.Context) {
 	name := c.Param("name")
 	phoneNumber := c.Param("phoneNumber")
+	postCode := c.Param("postCode")
+	email := c.Param("email")
 
-	statusCode := push(name, phoneNumber)
+	statusCode := push(name, phoneNumber, postCode, email)
 
 	c.Status(statusCode)
 
 }
 
-func push(name string, phoneNumber string) int {
-	accountServiceStatusCode := pushToAccountService(name, phoneNumber)
+func push(name string, phoneNumber string postCode string, email string) int {
+	accountServiceStatusCode := pushToAccountService(name, phoneNumber, postCode, email)
 	lookupServiceStatusCode := pushToLookupService(name, phoneNumber)
 	if accountServiceStatusCode != http.StatusOK && lookupServiceStatusCode != http.StatusOK {
 		return http.StatusBadRequest
@@ -51,20 +53,20 @@ func pushToLookupService(name string, number string) int {
 	url := fmt.Sprintf("%s/register/%s/%s", lookupServiceURL, name, number)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
-		fmt.Println("Guru Meditation: lookup")
+		fmt.Println("Guru Meditation: calling lookupService")
 	}
 	return resp.StatusCode
 }
 
-func pushToAccountService(name string, number string) int {
+func pushToAccountService(name string, phoneNumber string, postCode string, email string) int {
 	accountServiceURL := os.Getenv("ACCOUNT_SERVICE_URL")
 	if accountServiceURL == "" {
 		accountServiceURL = "http://localhost:8080"
 	}
-	url := fmt.Sprintf("%s/accountService/%s/%s", accountServiceURL, name, number)
+	url := fmt.Sprintf("%s/accountService/%s/%s/%s/%s", accountServiceURL, name, phoneNumber, postCode, email)
 	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
 	if err != nil {
-		fmt.Println("Guru Meditation: account")
+		fmt.Println("Guru Meditation: calling accountService")
 	}
 	return resp.StatusCode
 }

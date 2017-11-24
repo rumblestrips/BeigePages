@@ -9,10 +9,10 @@ import (
 )
 
 type account struct {
-	name        string
-	phoneNumber string
-	postCode    string
-	email       string
+	Name        string
+	PhoneNumber string
+	PostCode    string
+	Email       string
 }
 
 func main() {
@@ -35,13 +35,13 @@ func main() {
 func register(accountRegistry map[string]account) func(*gin.Context) {
 	return func(c *gin.Context) {
 		newAccount := account{
-			name:        c.Param("name"),
-			phoneNumber: c.Param("phoneNumber"),
-			postCode:    c.Param("postCode"),
-			email:       c.Param("email"),
+			Name:        c.Param("name"),
+			PhoneNumber: c.Param("phoneNumber"),
+			PostCode:    c.Param("postCode"),
+			Email:       c.Param("email"),
 		}
 
-		accountRegistry[newAccount.name] = newAccount
+		accountRegistry[newAccount.Name] = newAccount
 
 		c.Status(http.StatusOK)
 	}

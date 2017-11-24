@@ -1,33 +1,38 @@
 version: '2'
 services:
-  registrationService:
-    build: beigepages/registrationService
+  registration-service:
+    build: ../registrationService
     restart: always
     ports:
       - "8083:8083"
     environment:
       ENV: DEV
+      PORT: 8083
+      QUEUE_SERVICE_URL: http://queue-service:8082
 
-  queueService:
-    build: beigepages/queueService
+  queue-service:
+    build: ../queueService
     restart: always
     ports:
       - "8082:8082"
     environment:
       ENV: DEV
+      PORT: 8082
 
-  accountService:
-    build: beigepages/accountService
+  account-service:
+    build: ../accountService
     restart: always
     ports:
       - "8080:8080"
     environment:
       ENV: DEV
+      PORT: 8080
 
-  lookupService:
-    build: beigepages/lookupService
+  lookup-service:
+    build: ../lookupService
     restart: always
     ports:
       - "8081:8081"
     environment:
       ENV: DEV
+      PORT: 8081

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -12,9 +13,15 @@ func main() {
 
 	router := gin.Default()
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8082"
+	}
+	port = fmt.Sprintf(":%s", port)
+
 	// This handler will match /user/john but will not match neither /user/ or /user
 	router.POST("/enqueue/:name/:phoneNumber", enqueue)
-	router.Run(":8082")
+	router.Run(port)
 }
 
 func enqueue(c *gin.Context) {

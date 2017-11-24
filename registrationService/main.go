@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +19,18 @@ func main() {
 
 func register(c *gin.Context) {
 
-	//name := c.Param("name")
-	//number := c.Param("phoneNumber")
-	//url := fmt.Sprintf("http://localhost:8080/enqueue/%s/%s", name, number)
-	//http.Post(url)
+	name := c.Param("name")
+	number := c.Param("phoneNumber")
 
-	c.Status(http.StatusOK)
+	statusCode := push(name, number)
+	c.Status(statusCode)
+}
+
+func push(name string, number string) int {
+	url := fmt.Sprintf("http://localhost:8080/enqueue/%s/%s", name, number)
+	resp, err := http.Post(url, "text/plain", strings.NewReader(""))
+	if err != nil {
+		fmt.Println("Guru Meditation: hfdhjksfhdkjhfdkjashfdsa")
+	}
+	return resp.StatusCode
 }
